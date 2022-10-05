@@ -1,7 +1,7 @@
 package com.bank.domain;
 
 public class Account {
-	private double balance;
+	private double balance = 0;
 
 	public Account(double initBalance) {
 		this.balance = initBalance;
