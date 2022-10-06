@@ -9,6 +9,7 @@ public class MaquinaExpendedora {
 	private String id;
 	private Long balance;
 	private Long soldSodasAmt;
+	private String informeVentas;
 
 	public MaquinaExpendedora(Long balance, Long soldSodasAmt) throws Exception {
 		super();
@@ -30,6 +31,10 @@ public class MaquinaExpendedora {
 
 	public Long getSoldSodasAmt() {
 		return soldSodasAmt;
+	}
+
+	public String getInformeVentas() {
+		return informeVentas;
 	}
 
 	private void validate(Long balance, Long sodasAmt) throws Exception {
@@ -62,6 +67,15 @@ public class MaquinaExpendedora {
 		}
 	}
 
+	private void addInformeVentas(Soda soda, Long balance, Long soldSodasAmt) {
+		if (this.informeVentas == null)
+			this.informeVentas = "";
+
+		this.informeVentas = this.informeVentas.concat("Se ha vendido un refresco con ID " + soda.getId() + ".\n"
+				+ "El importe total de céntimos en la máquina expendedora es de: " + this.getBalance() + ".\n"
+				+ "Esta máquina ha vendido un total de " + this.getSoldSodasAmt() + " refrescos.\n\n");
+	}
+
 	public void reponer(Soda soda, Integer amt) throws Exception {
 		if (amt <= 0)
 			throw new Exception("El stock a reponer debe ser superior a 0.");
@@ -70,6 +84,9 @@ public class MaquinaExpendedora {
 		newStock += amt;
 
 		soda.setStock(newStock);
+
+		if (soda.isSoldOut())
+			soda.setSoldOut(false);
 	}
 
 	public void vender(Soda soda) throws Exception {
@@ -88,10 +105,17 @@ public class MaquinaExpendedora {
 
 		this.balance += soda.getPrice();
 		this.soldSodasAmt++;
+
+		this.addInformeVentas(soda, balance, soldSodasAmt);
 	}
 
-	public String mostrarInformeVentas() {
-		return "";
+	public void mostrarInformeVentas() {
+		if (this.informeVentas == null) {
+			System.out.println("Esta máquina aún no ha realizado ninguna venta.\n");
+			return;
+		}
+
+		System.out.println(this.informeVentas);
 	}
 
 }
