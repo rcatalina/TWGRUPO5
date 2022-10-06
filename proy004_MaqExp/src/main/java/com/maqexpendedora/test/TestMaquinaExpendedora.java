@@ -27,7 +27,9 @@ public class TestMaquinaExpendedora {
 
 			maq1.mostrarInformeVentas();
 
-			maq1.vender(s1, 40);
+//			maq1.vender(s1, 40);
+
+			Soda s3 = new Soda(-1, "Pera", 25, 0);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
