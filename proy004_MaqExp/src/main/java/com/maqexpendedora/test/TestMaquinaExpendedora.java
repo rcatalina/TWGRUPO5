@@ -23,6 +23,12 @@ public class TestMaquinaExpendedora {
 
 			maq1.mostrarInformeVentas();
 
+			maq1.vender(s1, 10);
+
+			maq1.mostrarInformeVentas();
+
+			maq1.vender(s1, 40);
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return;

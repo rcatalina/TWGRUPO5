@@ -57,7 +57,7 @@ public class MaquinaExpendedora {
 		}
 
 		if (hasError) {
-			String e = "";
+			String e = "ERROR\n";
 
 			for (String msg : errorMessages) {
 				e = e.concat(msg + " ");
@@ -67,18 +67,25 @@ public class MaquinaExpendedora {
 		}
 	}
 
-	private void addInformeVentas(Soda soda, Long balance, Long soldSodasAmt) {
+	private void addInformeVentas(Soda soda, Integer cantidad, Long balance, Long soldSodasAmt) {
 		if (this.informeVentas == null)
 			this.informeVentas = "";
 
-		this.informeVentas = this.informeVentas.concat("Se ha vendido un refresco con ID " + soda.getId() + ".\n"
+		String firstMsg;
+
+		if (cantidad == null)
+			firstMsg = "Se ha vendido un refresco con ID ";
+		else
+			firstMsg = "Se han vendido " + cantidad + " refrescos con ID ";
+
+		this.informeVentas = this.informeVentas.concat(firstMsg + soda.getId() + ".\n"
 				+ "El importe total de céntimos en la máquina expendedora es de: " + this.getBalance() + ".\n"
 				+ "Esta máquina ha vendido un total de " + this.getSoldSodasAmt() + " refrescos.\n\n");
 	}
 
 	public void reponer(Soda soda, Integer amt) throws Exception {
 		if (amt <= 0)
-			throw new Exception("El stock a reponer debe ser superior a 0.");
+			throw new Exception("ERROR\nEl stock a reponer debe ser superior a 0.");
 
 		Integer newStock = soda.getStock();
 		newStock += amt;
@@ -90,13 +97,9 @@ public class MaquinaExpendedora {
 	}
 
 	public void vender(Soda soda) throws Exception {
-		if (soda == null)
-			throw new Exception("Nos está llegando un refresco a NULL en el método vender().");
+		this.validateSale(soda, null);
 
 		Integer stock = soda.getStock();
-
-		if (stock <= 0)
-			throw new Exception("No hay stock de ese refresco. No ha sido posible realizar la venta.");
 
 		if (stock == 1)
 			soda.setSoldOut(true);
@@ -106,15 +109,44 @@ public class MaquinaExpendedora {
 		this.balance += soda.getPrice();
 		this.soldSodasAmt++;
 
-		this.addInformeVentas(soda, balance, soldSodasAmt);
+		this.addInformeVentas(soda, null, balance, soldSodasAmt);
+	}
+
+	public void vender(Soda soda, Integer cantidad) throws Exception {
+		this.validateSale(soda, cantidad);
+
+		Integer stock = soda.getStock();
+
+		if (stock == cantidad)
+			soda.setSoldOut(true);
+
+		soda.setStock(stock - cantidad);
+
+		this.balance += soda.getPrice() * cantidad;
+		this.soldSodasAmt += cantidad;
+
+		this.addInformeVentas(soda, cantidad, balance, soldSodasAmt);
+	}
+
+	private void validateSale(Soda soda, Integer cantidad) throws Exception {
+		if (soda == null)
+			throw new Exception("ERROR\nNos está llegando un refresco a NULL en el método vender().");
+
+		Integer stock = soda.getStock();
+
+		if ((cantidad == null && stock <= 0) || (cantidad != null && stock < cantidad))
+			throw new Exception("ERROR\nNo hay stock suficiente de ese refresco. No ha sido posible realizar la venta.");
+
 	}
 
 	public void mostrarInformeVentas() {
 		if (this.informeVentas == null) {
-			System.out.println("Esta máquina aún no ha realizado ninguna venta.\n");
+			System.out.println("INFORME DE VENTAS");
+			System.out.println("Esta máquina aún no ha realizado ninguna venta.\n\n");
 			return;
 		}
 
+		System.out.println("INFORME DE VENTAS");
 		System.out.println(this.informeVentas);
 	}
 

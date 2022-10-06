@@ -99,7 +99,7 @@ public class Soda {
 		}
 
 		if (hasError) {
-			String e = "";
+			String e = "ERROR\n";
 
 			for (String msg : errorMessages) {
 				e = e.concat(msg + " ");
