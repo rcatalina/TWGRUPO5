@@ -31,13 +31,13 @@ final class ClienteVIP extends Cliente {
 	}
 
 	// No se puede hacer override de metodos FINAL
-	@Override
-	public void hazAlgo() {
-		System.out.println("Trabajando PUES...");
-	}
+//	@Override
+//	public void hazAlgo() {
+//		System.out.println("Trabajando PUES...");
+//	}
 
 }
 
-class ClienteExtra extends ClienteVIP {
-
-}
+//class ClienteExtra extends ClienteVIP {
+//
+//}
