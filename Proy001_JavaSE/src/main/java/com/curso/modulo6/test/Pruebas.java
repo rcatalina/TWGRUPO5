@@ -47,8 +47,11 @@ public class Pruebas {
 
 		// SECRETARIO
 		Empleado s1 = new Secretario("Irantzu", "Gonzalez");
-		((Secretario) s1).atenderLlamada();
 		((Secretario) s1).setNumSegSocial(UUID.randomUUID().toString());
+		s1.setSalary(Double.valueOf(32000));
+		s1.mostrarDetalle();
+
+//		((Secretario) s1).atenderLlamada();
 
 	}
 

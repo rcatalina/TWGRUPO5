@@ -24,7 +24,9 @@ public class Ingeniero extends Empleado {
 	@Override
 	public void mostrarDetalle() {
 		super.mostrarDetalle();
-		System.out.println("CATEGORÍA: " + this.category);
+
+		if (this.category != null)
+			System.out.println("CATEGORÍA: " + this.category);
 	}
 
 }

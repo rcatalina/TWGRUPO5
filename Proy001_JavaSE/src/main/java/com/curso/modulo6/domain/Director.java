@@ -23,7 +23,9 @@ public class Director extends Gerente {
 	@Override
 	public void mostrarDetalle() {
 		super.mostrarDetalle();
-		System.out.println("COMISION: " + this.comision);
+
+		if (this.comision != null)
+			System.out.println("COMISION: " + this.comision);
 	}
 
 }

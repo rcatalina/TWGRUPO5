@@ -19,6 +19,8 @@ public class Gerente extends Empleado {
 	@Override
 	public void mostrarDetalle() {
 		super.mostrarDetalle();
-		System.out.println("DPTO: " + this.departamento);
+
+		if (this.departamento != null)
+			System.out.println("DPTO: " + this.departamento);
 	}
 }
