@@ -1,36 +1,48 @@
 package com.bank.domain;
 
+import java.util.UUID;
+
 public class Account {
-	private double balance = 0;
+    private String id;
+    private double balance = 0;
 
-	public Account(double initBalance) {
-		this.balance = initBalance;
-	}
+    public Account(double initBalance) {
+        this.id = UUID.randomUUID().toString();
+        this.balance = initBalance;
+    }
 
-	public double getBalance() {
-		return balance;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public boolean deposit(double amt) throws Exception {
-		if (amt <= 0)
-			throw new Exception("La cantidad a depositar debe ser superior a 0.");
+    public double getBalance() {
+        return balance;
+    }
 
-		this.balance += amt;
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
-		return true;
-	}
+    public boolean deposit(double amt) throws Exception {
+        if (amt <= 0)
+            throw new Exception("La cantidad a depositar debe ser superior a 0.");
 
-	public boolean withdraw(double amt) throws Exception {
-		if (amt <= 0)
-			throw new Exception("La cantidad a retirar debe ser superior a 0.");
+        this.balance += amt;
 
-		boolean isOK = false;
+        return true;
+    }
 
-		if (this.balance >= amt) {
-			isOK = true;
-			this.balance -= amt;
-		}
+    public boolean withdraw(double amt) throws Exception {
+        if (amt <= 0)
+            throw new Exception("La cantidad a retirar debe ser superior a 0.");
 
-		return isOK;
-	}
+        boolean isOK = false;
+
+        if (this.balance >= amt) {
+            isOK = true;
+            this.balance -= amt;
+        }
+
+        return isOK;
+    }
 }

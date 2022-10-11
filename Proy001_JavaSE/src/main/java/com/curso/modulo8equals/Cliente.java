@@ -1,6 +1,7 @@
 package com.curso.modulo8equals;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Cliente {
     private String id;
@@ -13,7 +14,7 @@ public class Cliente {
     }
 
     public Cliente(Cliente source) {
-        this.id = source.getId();
+        this.id = UUID.randomUUID().toString();
         this.name = source.getName();
     }
 

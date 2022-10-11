@@ -1,107 +1,85 @@
 package com.bank.domain;
 
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class Bank {
-	private String id;
-	private String name;
-	private Customer[] customers;
-	private Integer numberOfCustomers;
+public final class Bank {
+    private static String id = UUID.randomUUID().toString();
+    private static String name = "Kutxabank";
+    private static Customer[] customers = {};
+    private static Integer numberOfCustomers = 0;
 
-	public Bank(String name, Customer[] customers) throws Exception {
-		super();
+    private Bank() {
+        super();
+    }
 
-		validate(name, customers);
+    public static String getId() {
+        return id;
+    }
 
-		this.id = UUID.randomUUID().toString();
-		this.name = name;
+    public static String getName() {
+        return name;
+    }
 
-		if (customers == null) {
-			this.customers = new Customer[5];
-			this.numberOfCustomers = 5;
-		} else {
-			this.customers = customers;
-			this.numberOfCustomers = customers.length;
-		}
+    public static Customer getCustomer(int index) throws Exception {
 
-	}
+        if (customers == null)
+            throw new Exception("ERROR\nEl banco no tiene clientes.");
 
-	public String getId() {
-		return id;
-	}
+        if (index < 0)
+            throw new Exception("ERROR\nEl valor introducido para el índice deber ser igual o superior a 0.");
 
-	public String getName() {
-		return name;
-	}
+        if (index >= customers.length)
+            throw new Exception("ERROR\nNo existe el cliente relativo a ese índice.");
 
-	public void setName(String name) {
-		this.name = name;
-	}
+        return customers[index];
+    }
 
-	public Customer getCustomer(int index) throws Exception {
-		if (this.customers == null)
-			throw new Exception("ERROR\nEl banco no tiene clientes.");
+    public static Customer[] getCustomers() {
+        return customers;
+    }
 
-		if (index < 0)
-			throw new Exception("ERROR\nEl valor introducido para el índice deber ser igual o superior a 0.");
+    public static Integer getNumberOfCustomers() {
+        return numberOfCustomers;
+    }
 
-		if (index >= this.customers.length)
-			throw new Exception("ERROR\nNo existe el cliente relativo a ese índice.");
+    public static void addCustomer(String firstName, String lastName) throws Exception {
+        if (firstName == null || firstName.isBlank() || lastName == null || lastName.isBlank())
+            throw new Exception("ERROR\nEl nombre y apellido del cliente no pueden estar vacíos.");
 
-		return this.customers[index];
-	}
+        Customer customer = new Customer(firstName, lastName);
 
-	public Customer[] getCustomers() {
-		return customers;
-	}
+        List<Customer> customerList = Arrays.asList(customers);
+        customerList.add(customer);
 
-	public Integer getNumberOfCustomers() {
-		return numberOfCustomers;
-	}
+        customers = (Customer[]) customerList.toArray();
+        numberOfCustomers++;
+    }
 
-	public void addCustomer(String firstName, String lastName) throws Exception {
-		if (firstName == null || firstName.isBlank() || lastName == null || lastName.isBlank())
-			throw new Exception("ERROR\nEl nombre y apellido del cliente no pueden estar vacíos.");
-
-		Customer customer = new Customer(firstName, lastName);
-
-		List<Customer> customerList = new LinkedList<>();
-
-		for (int i = 0; i < customers.length; i++) {
-			customerList.add(this.customers[i]);
-		}
-
-		customerList.add(customer);
-
-		this.customers = (Customer[]) customerList.toArray();
-		this.numberOfCustomers++;
-	}
-
-	private void validate(String name, Customer[] customers) throws Exception {
-		boolean hasError = false;
-		List<String> errMessages = new LinkedList<>();
-
-		if (name == null || name.isBlank()) {
-			hasError = true;
-			errMessages.add("El nombre del banco no puede estar vacío.\n");
-		}
-
-		if (customers != null && customers.length < 5) {
-			hasError = true;
-			errMessages.add("En caso de introducir una lista de clientes, ésta debe contener al menos 5.\n");
-		}
-
-		if (hasError) {
-			String e = "ERROR\n";
-
-			for (String msg : errMessages) {
-				e = e.concat(msg + " ");
-			}
-
-			throw new Exception(e);
-		}
-	}
+//    private static void validate(String name, Customer[] customers) throws Exception {
+//        boolean hasError = false;
+//        List<String> errMessages = new LinkedList<>();
+//
+//        if (name == null || name.isBlank()) {
+//            hasError = true;
+//            errMessages.add("El nombre del banco no puede estar vacío.\n");
+//        }
+//
+//        if (customers != null && customers.length < 5) {
+//            hasError = true;
+//            errMessages.add("En caso de introducir una lista de clientes, ésta debe contener al menos 5.\n");
+//        }
+//
+//        if (hasError) {
+//            String e = "ERROR\n";
+//
+//            for (String msg : errMessages) {
+//                e = e.concat(msg + " ");
+//            }
+//
+//            throw new Exception(e);
+//        }
+//    }
 
 }
