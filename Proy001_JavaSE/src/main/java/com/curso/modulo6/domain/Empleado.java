@@ -44,4 +44,8 @@ public class Empleado {
 		System.out.println("Salario: " + this.salary);
 	}
 
+	public static void saludar() {
+		System.out.println("Hola!");
+	}
+
 }
