@@ -6,6 +6,7 @@ import java.util.Map;
 import com.bank.domain.CheckingAccount;
 import com.bank.domain.Customer;
 import com.bank.domain.SavingsAccount;
+import com.bank.exception.OverdraftException;
 
 public class CustomerReport {
 
@@ -22,7 +23,12 @@ public class CustomerReport {
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
+
+            if (e instanceof OverdraftException)
+                System.out.println("Deficit: " + ((OverdraftException) e).getDeficit());
+
         }
 
     }
@@ -32,6 +38,12 @@ public class CustomerReport {
         Customer c1 = new Customer("Jane", "Simms");
         c1.addAccount(new SavingsAccount(500, 2));
         c1.addAccount(new CheckingAccount(200, 1500));
+
+//        Account a = new CheckingAccount(200, 1500);
+//        a.withdraw(10000);
+//
+//        Account b = new SavingsAccount(200, 1.3);
+//        b.withdraw(10000);
 
         Customer c2 = new Customer("Owen", "Bryant");
         c2.addAccount(new CheckingAccount(200, 1000));

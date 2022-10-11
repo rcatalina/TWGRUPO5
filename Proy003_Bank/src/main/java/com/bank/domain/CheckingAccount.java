@@ -1,5 +1,7 @@
 package com.bank.domain;
 
+import com.bank.exception.OverdraftException;
+
 public class CheckingAccount extends Account {
 
     private double overdraftAmount;
@@ -22,19 +24,19 @@ public class CheckingAccount extends Account {
     }
 
     @Override
-    public boolean withdraw(double amt) throws Exception {
+    public void withdraw(double amt) throws OverdraftException {
 
         if (amt <= 0)
-            throw new Exception("La cantidad a retirar debe ser superior a 0.");
+            throw new OverdraftException("La cantidad a retirar debe ser superior a 0.", 0);
 
         double currentBalance = this.getBalance();
         double newBalance = currentBalance - amt;
 
         if (newBalance < this.overdraftAmount)
-            return false;
+            throw new OverdraftException("La cantidad a retirar supera el límite de esta cuenta.",
+                    newBalance + this.overdraftAmount);
 
         this.setBalance(newBalance);
-        return true;
 
     }
 

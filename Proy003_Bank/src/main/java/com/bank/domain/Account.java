@@ -2,6 +2,8 @@ package com.bank.domain;
 
 import java.util.UUID;
 
+import com.bank.exception.OverdraftException;
+
 public class Account {
     private String id;
     private double balance = 0;
@@ -32,17 +34,14 @@ public class Account {
         return true;
     }
 
-    public boolean withdraw(double amt) throws Exception {
+    public void withdraw(double amt) throws OverdraftException {
         if (amt <= 0)
-            throw new Exception("La cantidad a retirar debe ser superior a 0.");
+            throw new OverdraftException("La cantidad a retirar debe ser superior a 0.", 0);
 
-        boolean isOK = false;
-
-        if (this.balance >= amt) {
-            isOK = true;
+        if (this.balance >= amt)
             this.balance -= amt;
-        }
+        else
+            throw new OverdraftException("La cantidad a retirar supera la cantidad disponible en esta cuenta.", this.balance - amt);
 
-        return isOK;
     }
 }
