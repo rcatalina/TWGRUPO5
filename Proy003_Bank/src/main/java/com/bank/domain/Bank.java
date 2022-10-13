@@ -1,14 +1,13 @@
 package com.bank.domain;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public final class Bank {
     private static String id = UUID.randomUUID().toString();
     private static String name = "Kutxabank";
-    private static Customer[] customers = {};
-    private static Integer numberOfCustomers = 0;
+    private static List<Customer> customers = new ArrayList<>();
 
     private Bank() {
         super();
@@ -30,18 +29,18 @@ public final class Bank {
         if (index < 0)
             throw new Exception("ERROR\nEl valor introducido para el índice deber ser igual o superior a 0.");
 
-        if (index >= customers.length)
+        if (index >= customers.size())
             throw new Exception("ERROR\nNo existe el cliente relativo a ese índice.");
 
-        return customers[index];
+        return customers.get(index);
     }
 
-    public static Customer[] getCustomers() {
+    public static List<Customer> getCustomers() {
         return customers;
     }
 
-    public static Integer getNumberOfCustomers() {
-        return numberOfCustomers;
+    public static int getNumberOfCustomers() {
+        return customers.size();
     }
 
     public static void addCustomer(String firstName, String lastName) throws Exception {
@@ -54,42 +53,7 @@ public final class Bank {
     }
 
     public static void addCustomer(Customer customer) throws Exception {
-        List<Customer> customerList = new LinkedList<>();
-
-        for (Customer currentCustomer : customers) {
-            customerList.add(currentCustomer);
-        }
-
-        customerList.add(customer);
-
-        customers = customerList.toArray(new Customer[0]);
-        numberOfCustomers++;
-
+        customers.add(customer);
     }
-
-//    private static void validate(String name, Customer[] customers) throws Exception {
-//        boolean hasError = false;
-//        List<String> errMessages = new LinkedList<>();
-//
-//        if (name == null || name.isBlank()) {
-//            hasError = true;
-//            errMessages.add("El nombre del banco no puede estar vacío.\n");
-//        }
-//
-//        if (customers != null && customers.length < 5) {
-//            hasError = true;
-//            errMessages.add("En caso de introducir una lista de clientes, ésta debe contener al menos 5.\n");
-//        }
-//
-//        if (hasError) {
-//            String e = "ERROR\n";
-//
-//            for (String msg : errMessages) {
-//                e = e.concat(msg + " ");
-//            }
-//
-//            throw new Exception(e);
-//        }
-//    }
 
 }

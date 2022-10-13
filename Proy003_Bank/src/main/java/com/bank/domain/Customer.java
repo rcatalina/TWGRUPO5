@@ -9,7 +9,6 @@ public class Customer {
     private String firstName;
     private String lastName;
     private Map<String, Account> accounts;
-    private int numAccounts;
 
     public Customer(String firstName, String lastName) {
         this.id = UUID.randomUUID().toString();
@@ -39,11 +38,7 @@ public class Customer {
     }
 
     public int getNumAccounts() {
-        return numAccounts;
-    }
-
-    public void setNumAccounts(int numAccounts) {
-        this.numAccounts = numAccounts;
+        return accounts.size();
     }
 
     public Account getAccount(String id) {
@@ -58,7 +53,6 @@ public class Customer {
 
         if (accounts.get(accountID) == null) {
             this.accounts.put(accountID, account);
-            this.numAccounts++;
         } else
             throw new Exception("La cuenta a añadir ya existe.");
 
@@ -72,17 +66,15 @@ public class Customer {
 
         if (accounts.get(accountID) == null)
             throw new Exception("La cuenta a eliminar no existe.");
-        else {
+        else
             this.accounts.remove(accountID);
-            this.numAccounts--;
-        }
 
     }
 
     public void showDetail() throws Exception {
         System.out.println("\nCustomer: " + this.lastName + ", " + this.firstName);
 
-        if (this.numAccounts > 0) {
+        if (this.accounts.size() > 0) {
             for (Account account : this.accounts.values()) {
                 String nameToShow;
 

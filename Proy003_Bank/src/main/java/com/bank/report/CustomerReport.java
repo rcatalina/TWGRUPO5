@@ -1,5 +1,7 @@
 package com.bank.report;
 
+import java.util.List;
+
 import com.bank.domain.Bank;
 import com.bank.domain.Customer;
 
@@ -10,7 +12,12 @@ public final class CustomerReport {
     }
 
     public static void generateReport() {
-        Customer[] customers = Bank.getCustomers();
+        List<Customer> customers = Bank.getCustomers();
+
+        if (customers == null || customers.isEmpty()) {
+            System.out.println("El banco no tiene clientes.");
+            return;
+        }
 
         try {
 
