@@ -1,6 +1,6 @@
 package com.bank.domain;
 
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,11 +50,21 @@ public final class Bank {
 
         Customer customer = new Customer(firstName, lastName);
 
-        List<Customer> customerList = Arrays.asList(customers);
+        Bank.addCustomer(customer);
+    }
+
+    public static void addCustomer(Customer customer) throws Exception {
+        List<Customer> customerList = new LinkedList<>();
+
+        for (Customer currentCustomer : customers) {
+            customerList.add(currentCustomer);
+        }
+
         customerList.add(customer);
 
-        customers = (Customer[]) customerList.toArray();
+        customers = customerList.toArray(new Customer[0]);
         numberOfCustomers++;
+
     }
 
 //    private static void validate(String name, Customer[] customers) throws Exception {
