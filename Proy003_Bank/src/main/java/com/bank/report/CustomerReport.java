@@ -22,14 +22,7 @@ public final class CustomerReport {
             }
 
         } catch (Exception e) {
-          
-
-//            if (e instanceof OverdraftException)
-//                e.
-//                System.out.println("Deficit: " + ((OverdraftException) e).getDeficit());
-//            else
-                e.printStackTrace();
-            
+            e.printStackTrace();
         }
 
     }
