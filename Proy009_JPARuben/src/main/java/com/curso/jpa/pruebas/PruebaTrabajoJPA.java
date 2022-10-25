@@ -1,5 +1,6 @@
 package com.curso.jpa.pruebas;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -44,7 +45,7 @@ public class PruebaTrabajoJPA {
 			em.getTransaction().begin();
 
 			Trabajo tDesdeBD = em.find(Trabajo.class, tNuevo.getId());
-			tDesdeBD.setMaxSalary(Double.valueOf(8399290));
+			tDesdeBD.setMaxSalary(Double.valueOf(89290));
 
 			em.getTransaction().commit(); // hace la update aqui (update + commit)
 		} catch (Exception e) {
@@ -85,12 +86,13 @@ public class PruebaTrabajoJPA {
 		}
 
 		// consulta JPAQuery
+		List<Trabajo> trabajos = new LinkedList<>();
 		try {
 			em.getTransaction().begin();
 
 			Query query = em.createQuery("SELECT t from Trabajo t");
 
-			List<Trabajo> trabajos = query.getResultList();
+			trabajos = query.getResultList();
 
 			em.getTransaction().commit();
 		} catch (Exception e) {
@@ -98,6 +100,8 @@ public class PruebaTrabajoJPA {
 
 			em.getTransaction().rollback();
 		}
+
+		System.out.println(trabajos);
 
 	}
 }
