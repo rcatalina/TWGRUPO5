@@ -3,6 +3,8 @@ package com.curso.domain.pruebas;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.curso.domain.services.SaludoService;
+
 public class MiApp {
 
 	public static void main(String[] args) {
@@ -21,9 +23,17 @@ public class MiApp {
 
 //		SaludoService s1 = (SaludoService) ctx.getBean("saludadorPrototipo");
 //		s1.saludar("Soy el saludador 1.");
-//
+
+		// esto crea cada vez una instancia ya que
+		// en el bean no es singleton
+
 //		SaludoService s2 = (SaludoService) ctx.getBean("saludadorPrototipo");
 //		s2.saludar("Soy el saludador 2.");
+
+		SaludoService sAdios = (SaludoService) ctx.getBean("saludadorAdios");
+		sAdios.saludar("Soy el saludador adios.");
+
+//		NominasService nom = (NominasService) ctx.getBean("nominasCalculator");
 	}
 
 }
