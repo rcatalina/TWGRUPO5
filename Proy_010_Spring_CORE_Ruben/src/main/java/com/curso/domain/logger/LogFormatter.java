@@ -17,6 +17,7 @@ public class LogFormatter extends Formatter {
 	public static final String ANSI_CYAN = "\u001B[36m";
 	public static final String ANSI_WHITE = "\u001B[37m";
 
+	// LOGGER level
 	public static final String LEVEL_INFO = "INFO";
 	public static final String LEVEL_SEVERE = "SEVERE";
 
@@ -26,8 +27,6 @@ public class LogFormatter extends Formatter {
 	// format is called for every console log message
 	@Override
 	public String format(LogRecord record) {
-		// This example will print date/time, class, and log level in yellow,
-		// followed by the log message and it's parameters in white .
 		StringBuilder builder = new StringBuilder();
 		builder.append(ANSI_YELLOW);
 
@@ -56,7 +55,7 @@ public class LogFormatter extends Formatter {
 		}
 
 		builder.append(" [");
-		builder.append(record.getLevel().getName());
+		builder.append(levelName);
 		builder.append("]");
 
 		builder.append(ANSI_BLACK);
