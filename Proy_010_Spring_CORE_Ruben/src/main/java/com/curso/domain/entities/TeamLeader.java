@@ -64,6 +64,7 @@ public class TeamLeader extends Manager {
 	public void manage() {
 		loggerService.getLogger().info("... TeamLeader está gestionando su equipo.");
 		loggerService.getLogger().warning("Este jefe de equipo está gestionando el recurso : " + this.resource + ".");
+		loggerService.getLogger().severe("Error gordo del copón.");
 
 	}
 
