@@ -20,6 +20,7 @@ public class LogFormatter extends Formatter {
 	// LOGGER level
 	public static final String LEVEL_INFO = "INFO";
 	public static final String LEVEL_SEVERE = "SEVERE";
+	public static final String LEVEL_WARNING = "WARNING";
 
 	// Here you can configure the format of the output and
 	// its color by using the ANSI escape codes defined above.
@@ -48,6 +49,10 @@ public class LogFormatter extends Formatter {
 
 		case LEVEL_SEVERE:
 			builder.append(ANSI_RED);
+			break;
+
+		case LEVEL_WARNING:
+			builder.append(ANSI_PURPLE);
 			break;
 
 		default:

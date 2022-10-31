@@ -4,6 +4,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.curso.domain.services.LoggerService;
 
 @Service
 @Lazy
-@Scope(scopeName = "singleton")
+@Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class LoggerServiceProvider implements LoggerService {
 
 	private Logger logger;
