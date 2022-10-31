@@ -1,49 +1,36 @@
 package com.curso.domain.providers;
 
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Formatter;
-import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 
-import com.curso.domain.logger.LogFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.curso.domain.services.LoggerService;
 import com.curso.domain.services.SaludoService;
 
+@Service
+@Lazy
+@Scope(scopeName = "singleton")
 public class SaludoServiceProvider implements SaludoService {
 
-	private Logger logger;
 	private String msg = "";
 
+	@Autowired
+	private LoggerService loggerService;
+
 	public SaludoServiceProvider() {
-		this.logger = Logger.getLogger("SaludoServiceProvider");
-		this.logger.setUseParentHandlers(false);
-
-		ConsoleHandler handler = new ConsoleHandler();
-
-		Formatter formatter = new LogFormatter();
-		handler.setFormatter(formatter);
-
-		this.logger.addHandler(handler);
-
-		this.logger.info("... instanciando SaludoServiceProvider");
+		super();
 	}
 
 	public SaludoServiceProvider(String msg1, String msg2) {
-		this.logger = Logger.getLogger("SaludoServiceProvider");
-		this.logger.setUseParentHandlers(false);
-
-		ConsoleHandler handler = new ConsoleHandler();
-
-		Formatter formatter = new LogFormatter();
-		handler.setFormatter(formatter);
-
-		this.logger.addHandler(handler);
-
-		this.logger.info("... instanciando SaludoServiceProvider");
-
 		this.msg = msg1 + " " + msg2;
 	}
 
-	public Logger getLogger() {
-		return this.logger;
+	@PostConstruct
+	public void init() {
+		loggerService.getLogger().info("... instanciando SaludoServiceProvider");
 	}
 
 	public String getMessage() {
@@ -53,8 +40,8 @@ public class SaludoServiceProvider implements SaludoService {
 	@Override
 	public void saludar(String msg) {
 		String toReturn = this.msg + " " + msg;
-		logger.info(toReturn);
-		logger.severe("Error gordo del copón!!!");
+
+		loggerService.getLogger().info(toReturn);
 
 	}
 

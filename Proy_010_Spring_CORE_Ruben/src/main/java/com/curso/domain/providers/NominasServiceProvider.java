@@ -1,45 +1,45 @@
 package com.curso.domain.providers;
 
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Formatter;
-import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.curso.domain.logger.LogFormatter;
 import com.curso.domain.services.IRPFService;
+import com.curso.domain.services.LoggerService;
 import com.curso.domain.services.NominasService;
 
 @Service
+@Lazy
+@Scope(scopeName = "singleton")
 public class NominasServiceProvider implements NominasService {
-	private Logger logger;
-	private String msg = "";
-
-	public NominasServiceProvider() {
-		super();
-		this.logger = Logger.getLogger("NominasServiceProvider");
-		this.logger.setUseParentHandlers(false);
-
-		ConsoleHandler handler = new ConsoleHandler();
-
-		Formatter formatter = new LogFormatter();
-		handler.setFormatter(formatter);
-
-		this.logger.addHandler(handler);
-
-		this.logger.info("... instanciando NominasServiceProvider");
-	}
 
 	// inyecta en la variable de referencia una instancia de IRPFService
 	// TIENE QUE SER UN INTERFACE
 	@Autowired
 	private IRPFService irpfService;
 
+	@Autowired
+	private LoggerService loggerService;
+
+	public NominasServiceProvider() {
+		super();
+	}
+
+	// Esta etiqueta es para usar las dependencias @autowired tras pasar por el
+	// constructor
+	// NO SE PUEDEN USAR DEPENDENCIAS EN EL CONSTRUCTOR
+	@PostConstruct
+	public void init() {
+		loggerService.getLogger().info("... instanciando NominasServiceProvider");
+	}
+
 	@Override
 	public void calcularNomina() {
-		System.out.println("...entramos en calcularNomina()");
-		System.out.println("Tu nomina es: " + irpfService.calcularIRPF());
+		loggerService.getLogger().info("...entramos en calcularNomina()");
+		loggerService.getLogger().info("Tu nomina es: " + irpfService.calcularIRPF());
 	}
 
 }

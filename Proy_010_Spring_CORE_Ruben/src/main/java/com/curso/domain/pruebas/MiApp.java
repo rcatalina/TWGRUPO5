@@ -3,7 +3,7 @@ package com.curso.domain.pruebas;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.curso.domain.services.SaludoService;
+import com.curso.domain.services.NominasService;
 
 public class MiApp {
 
@@ -30,10 +30,13 @@ public class MiApp {
 //		SaludoService s2 = (SaludoService) ctx.getBean("saludadorPrototipo");
 //		s2.saludar("Soy el saludador 2.");
 
-		SaludoService sAdios = (SaludoService) ctx.getBean("saludadorAdios");
-		sAdios.saludar("Soy el saludador adios.");
+//		SaludoService sAdios = (SaludoService) ctx.getBean("saludadorAdios");
+//		sAdios.saludar("Soy el saludador adios.");
 
-//		NominasService nom = (NominasService) ctx.getBean("nominasCalculator");
+//		 el bean es el nombre de la clase de implementacion del servicio,
+//		con la primera letra en minuscula
+		NominasService nom = (NominasService) ctx.getBean("nominasServiceProvider");
+
 	}
 
 }
